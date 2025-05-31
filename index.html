@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Achyuth | Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+
+    @keyframes glow-button {
+      0%, 100% {
+        text-shadow: 0 0 8px #9f5fff, 0 0 15px #9f5fff;
+        color: #c99fff;
+      }
+      50% {
+        text-shadow: 0 0 20px #9f5fff, 0 0 40px #9f5fff;
+        color: #e2bbff;
+      }
+    }
+
+    .glowing-text {
+      animation: glow-button 3s ease-in-out infinite alternate;
+    }
+
+    html, body {
+      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+      overflow-x: hidden;
+    }
+
+    canvas#snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    h1 span {
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #9f5fff, 0 0 20px #9f5fff;
+      }
+      to {
+        text-shadow: 0 0 20px #9f5fff, 0 0 40px #9f5fff;
+      }
+    }
+
+    .skill-bar {
+      height: 16px;
+      border-radius: 9999px;
+      background-color: #2d2d4d;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .skill-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(135deg, #7f00ff, #e100ff);
+      animation: fillBar 2.5s ease-out forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-fill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 150%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%
+      );
+      animation: waveFlow 2.5s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes fillBar {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    @keyframes waveFlow {
+      0% { left: -150%; }
+      100% { left: 100%; }
+    }
+
+    .sticky-nav {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 50;
+    }
+
+    .sticky-scroll {
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 50;
+    }
+
+    .icon-btn {
+      background-color: white;
+      color: black;
+      padding: 10px;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    .icon-btn:hover {
+      background-color: #a855f7;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .discord-username {
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .discord-username.visible {
+      opacity: 1;
+    }
+
+    /* Music Bar */
+    .music-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #1f1c3a;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 40;
+      border-top: 2px solid #9f5fff;
+      box-shadow: 0 -2px 10px rgba(159, 95, 255, 0.3);
+    }
+
+    .music-bar i {
+      font-size: 1.5rem;
+      color: #c99fff;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .music-bar i:hover {
+      transform: scale(1.2);
+    }
+
+    .music-info {
+      color: #eee;
+      font-weight: 500;
+      flex-grow: 1;
+    }
+
+    .music-progress {
+      height: 6px;
+      background: #3b3366;
+      border-radius: 4px;
+      overflow: hidden;
+      width: 200px;
+    }
+
+    .music-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #a855f7, #7f00ff);
+      transition: width 0.3s ease;
+    }
+
+  </style>
+</head>
+<body class="text-white font-sans relative">
+
+  <!-- Snow Canvas -->
+  <canvas id="snow"></canvas>
+
+  <!-- Sticky Buttons -->
+  <div class="sticky-nav">
+    <a href="#home" class="icon-btn"><i class="fas fa-home"></i></a>
+  </div>
+  <div class="sticky-scroll">
+    <a href="#skills" class="icon-btn"><i class="fas fa-arrow-down"></i></a>
+  </div>
+
+  <!-- Hero -->
+  <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4 z-10 relative">
+    <h1 class="text-5xl md:text-7xl font-bold">Hi, I’m <span class="text-purple-400">Achyuth</span></h1>
+    <p class="mt-4 text-lg md:text-xl text-gray-300">A passionate developer & creator</p>
+    <a href="#skills" class="mt-8 inline-block bg-purple-600 hover:scale-105 transition-all px-6 py-3 rounded-full text-lg">View My Accomplishments</a>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="px-6 md:px-20 py-20 bg-[#1b1a33] rounded-t-[2rem] relative z-10">
+    <h2 class="text-4xl font-semibold text-center mb-12">Skills</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <i class="fab fa-python text-2xl text-yellow-400"></i>
+          <span class="text-lg font-medium">Python</span>
+          <span class="ml-auto text-green-400">100%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" style="animation-delay:.1s;"></div></div>
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <i class="fab fa-js text-2xl text-yellow-300"></i>
+          <span class="text-lg font-medium">JavaScript</span>
+          <span class="ml-auto text-green-400">100%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" style="animation-delay:.3s;"></div></div>
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <i class="fas fa-code text-2xl text-blue-400"></i>
+          <span class="text-lg font-medium">C++</span>
+          <span class="ml-auto text-green-400">100%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" style="animation-delay:.5s;"></div></div>
+      </div>
+      <div class="space-y-2">
+        <div class="flex items-center gap-3">
+          <i class="fab fa-java text-2xl text-red-400"></i>
+          <span class="text-lg font-medium">Java</span>
+          <span class="ml-auto text-green-400">100%</span>
+        </div>
+        <div class="skill-bar"><div class="skill-fill" style="animation-delay:.7s;"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="px-6 md:px-20 py-20 bg-[#141324]">
+    <h2 class="text-4xl font-semibold text-center mb-10">Projects & Achievements</h2>
+    <div class="max-w-3xl mx-auto space-y-4 text-gray-200 text-lg">
+      <p>I developed the <strong>Autosecure API</strong> with multiple secure endpoints:</p>
+      <ul class="list-disc pl-5 space-y-1">
+        <li><code>/api/msaauth</code> - Secure with MSAAUTH</li>
+        <li><code>/api/recoverycode</code> - Secure with full recovery code</li>
+        <li><code>/api/otp</code> - Secure with OTP</li>
+        <li><code>/api/status</code> - Check status via UID</li>
+        <li><code>/api/emails</code> - Read emails (autosecure.lol only)</li>
+        <li><code>/api/lunar/attributes</code> - Lunar Client cosmetic data</li>
+      </ul>
+      <p class="mt-4">I also built a full <strong>web version</strong> of this API platform.</p>
+      <p>Additionally, I’ve created <strong>25+ major Discord bots</strong> for automation, moderation, and more.</p>
+      <p>I developed the popular Discord server for <strong>Hypixel Tournaments Wing</strong> that holds over <strong>8k members</strong> and made their private moderation bot.</p>
+    </div>
+  </section>
+
+  <!-- Social -->
+  <section id="social" class="px-6 md:px-20 py-20 bg-[#1c1a2e] text-center">
+    <h2 class="text-4xl font-semibold mb-10">Social</h2>
+    <div class="flex justify-center gap-12 text-4xl">
+      <a href="https://www.instagram.com/achyyuthh/" target="_blank" class="hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
+      <button id="discordBtn" class="hover:text-blue-400 transition"><i class="fab fa-discord"></i></button>
+    </div>
+    <div id="discordText" class="mt-4 text-gray-400 text-lg discord-username">username: 6czi</div>
+  </section>
+
+  <footer class="text-center py-6 text-sm text-gray-400">© 2025 Achyuth. All rights reserved.</footer>
+
+  <!-- Music Bar -->
+  <div class="music-bar">
+    <i id="playPause" class="fas fa-pause"></i>
+    <div class="music-info">Now Playing: <span class="text-purple-300">music.mp3</span></div>
+    <div class="music-progress">
+      <div class="music-progress-fill" id="musicProgress"></div>
+    </div>
+    <audio id="bgMusic" src="music.mp3" autoplay loop></audio>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const fills = entry.target.querySelectorAll('.skill-fill');
+          fills.forEach(el => el.style.width = "100%");
+        }
+      });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.skill-bar').forEach(bar => {
+      observer.observe(bar);
+    });
+
+    document.getElementById("discordBtn").addEventListener("click", () => {
+      const text = document.getElementById("discordText");
+      text.classList.toggle("visible");
+    });
+
+    // Snow Particle
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    function initParticles() {
+      for (let i = 0; i < 80; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5 + 0.5,
+          speed: Math.random() * 1 + 0.2
+        });
+      }
+    }
+
+    function animateSnow() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+        p.y += p.speed;
+        if (p.y > canvas.height) {
+          p.y = -p.radius;
+          p.x = Math.random() * canvas.width;
+        }
+      }
+      requestAnimationFrame(animateSnow);
+    }
+
+    initParticles();
+    animateSnow();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Music Controls
+    const audio = document.getElementById("bgMusic");
+    const playPause = document.getElementById("playPause");
+    const progress = document.getElementById("musicProgress");
+
+    playPause.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play();
+        playPause.classList.replace("fa-play", "fa-pause");
+      } else {
+        audio.pause();
+        playPause.classList.replace("fa-pause", "fa-play");
+      }
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progress.style.width = percent + "%";
+    });
+  </script>
+
+</body>
+</html>

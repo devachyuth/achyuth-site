@@ -62,10 +62,34 @@
         height: 80px;
       }
     }
+
+    /* ✅ Tap-to-enter screen */
+    #tap-overlay {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-family: Inter, sans-serif;
+      z-index: 10000;
+      cursor: pointer;
+      flex-direction: column;
+    }
+    #tap-overlay:active {
+      opacity: 0.95;
+    }
   </style>
 </head>
 
 <body>
+  <!-- ✅ Tap to Enter -->
+  <div id="tap-overlay">
+    <div>Tap to Enter</div>
+  </div>
+
   <div class="container">
     <div class="header">
       <h1>Achyuth</h1>
@@ -103,7 +127,7 @@
     </div>
   </div>
 
-  <!-- ✅ Lottie NFC Overlay -->
+  <!-- ✅ NFC Overlay -->
   <div id="nfc-overlay">
     <div class="nfc-animation-box">
       <div id="nfc-lottie"></div>
@@ -132,9 +156,15 @@
     updateTime();
   </script>
 
-  <!-- ✅ NFC Lottie Logic -->
+  <!-- ✅ Tap-to-enter Logic -->
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("tap-overlay").addEventListener("click", () => {
+      document.getElementById("tap-overlay").style.display = "none";
+      // Continue to NFC logic after user taps
+      handleNfcEntry();
+    });
+
+    function handleNfcEntry() {
       const isNfc = new URLSearchParams(window.location.search).get('nfc') === 'true';
       if (!isNfc) return;
 
@@ -148,7 +178,7 @@
         renderer: 'svg',
         loop: false,
         autoplay: true,
-        path: 'tick.json' // Make sure tick.json is in same folder
+        path: 'tick.json'
       });
 
       setTimeout(() => {
@@ -159,7 +189,7 @@
       setTimeout(() => {
         overlay.style.display = 'none';
       }, 2000);
-    });
+    }
   </script>
 </body>
 </html>

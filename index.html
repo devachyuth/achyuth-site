@@ -1,195 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Achyuth — Developer & Designer</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://unpkg.com/feather-icons"></script>
-  <script src="https://unpkg.com/lottie-web@5.7.6/build/player/lottie.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Achyuth</title>
+    <meta name="description" content="Official portfolio of Achyuth – designer, developer & innovator." />
+    <meta name="author" content="Achyuth" />
 
-  <style>
-    @keyframes popin {
-      from { transform: scale(0.6); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
+    <meta property="og:title" content="Achyuth" />
+    <meta property="og:description" content="Achyuth -- Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://i.postimg.cc/bYxFwhS6/Chat-GPT-Image-Jul-27-2025-03-29-11-PM.png" />
 
-    #nfc-overlay {
-      position: fixed;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      flex-direction: column;
-    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://i.postimg.cc/bYxFwhS6/Chat-GPT-Image-Jul-27-2025-03-29-11-PM.png" />
+  </head>
 
-    .nfc-animation-box {
-      background: white;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      animation: popin 0.3s ease forwards;
-      max-width: 90%;
-      width: 200px;
-    }
-
-    #nfc-lottie {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 16px;
-    }
-
-    .nfc-text {
-      font-size: 1rem;
-      color: #111;
-      text-align: center;
-    }
-
-    @media (max-width: 600px) {
-      .nfc-animation-box {
-        width: 160px;
-      }
-      #nfc-lottie {
-        width: 80px;
-        height: 80px;
-      }
-    }
-
-    /* ✅ Tap-to-enter screen */
-    #tap-overlay {
-      position: fixed;
-      inset: 0;
-      background: black;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      font-family: Inter, sans-serif;
-      z-index: 10000;
-      cursor: pointer;
-      flex-direction: column;
-    }
-    #tap-overlay:active {
-      opacity: 0.95;
-    }
-  </style>
-</head>
-
-<body>
-  <!-- ✅ Tap to Enter -->
-  <div id="tap-overlay">
-    <div>Tap to Enter</div>
-  </div>
-
-  <div class="container">
-    <div class="header">
-      <h1>Achyuth</h1>
-      <p id="typing" class="typing"></p>
-    </div>
-
-    <div class="info-columns">
-      <div><strong>Age</strong><br />14</div>
-      <div><strong>From</strong><br />Calicut, Kerala, India</div>
-      <div><strong>School</strong><br />Al Farook, Farook College</div>
-      <div><strong>My Timezone</strong><br /><span id="time"></span></div>
-    </div>
-
-    <div class="section">
-      <h2>What I Do</h2>
-      <p>Website designing, Graphic designing, Discord bot development</p>
-    </div>
-
-    <div class="section">
-      <h2>My Brand</h2>
-      <div class="brand-links">
-        <a href="https://snaptier.xyz" target="_blank" class="icon-link"><i data-feather="globe"></i> snaptier.xyz</a>
-        <a href="https://www.instagram.com/snaptier/" target="_blank" class="icon-link"><i data-feather="instagram"></i> @snaptier</a>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>Contact Me</h2>
-      <div class="contact-links">
-        <a class="icon-link" href="tel:+917012365584"><i data-feather="phone"></i> +91 7012365584</a>
-        <a class="icon-link" href="mailto:achyyuthh@gmail.com"><i data-feather="mail"></i> achyyuthh@gmail.com</a>
-        <a class="icon-link" href="https://www.instagram.com/achyyuthh/" target="_blank"><i data-feather="instagram"></i> @achyyuthh</a>
-        <a class="icon-link" href="https://discord.com/users/1375569084695052450" target="_blank"><i data-feather="message-circle"></i> Discord</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ✅ NFC Overlay -->
-  <div id="nfc-overlay">
-    <div class="nfc-animation-box">
-      <div id="nfc-lottie"></div>
-      <div class="nfc-text">Successfully entered via NFC card</div>
-    </div>
-  </div>
-
-  <!-- ✅ Ding Sound -->
-  <audio id="nfc-sound" preload="auto">
-    <source src="ding.mp3" type="audio/mp3" />
-  </audio>
-
-  <!-- ✅ Feather Icons -->
-  <script>
-    feather.replace();
-  </script>
-
-  <!-- ✅ Time Updater -->
-  <script>
-    function updateTime() {
-      const now = new Date();
-      const options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-      document.getElementById("time").textContent = now.toLocaleTimeString('en-IN', options);
-    }
-    setInterval(updateTime, 1000);
-    updateTime();
-  </script>
-
-  <!-- ✅ Tap-to-enter Logic -->
-  <script>
-    document.getElementById("tap-overlay").addEventListener("click", () => {
-      document.getElementById("tap-overlay").style.display = "none";
-      // Continue to NFC logic after user taps
-      handleNfcEntry();
-    });
-
-    function handleNfcEntry() {
-      const isNfc = new URLSearchParams(window.location.search).get('nfc') === 'true';
-      if (!isNfc) return;
-
-      const overlay = document.getElementById('nfc-overlay');
-      const sound = document.getElementById('nfc-sound');
-
-      overlay.style.display = 'flex';
-
-      const anim = lottie.loadAnimation({
-        container: document.getElementById('nfc-lottie'),
-        renderer: 'svg',
-        loop: false,
-        autoplay: true,
-        path: 'tick.json'
-      });
-
-      setTimeout(() => {
-        sound.volume = 1;
-        sound.play().catch(e => console.warn('🔇 Ding failed:', e));
-      }, 100);
-
-      setTimeout(() => {
-        overlay.style.display = 'none';
-      }, 2000);
-    }
-  </script>
-</body>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

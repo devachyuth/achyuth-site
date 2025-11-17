@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Achyuth | Contact</title>
+
+<!-- SEO -->
+<meta name="description" content="Contact Achyuth — web developer and designer. Minimal, premium contact page.">
+<link rel="icon" type="image/png" href="favicon.png">
+
+<!-- Fonts & Libs -->
+<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- Lottie -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.8.1/lottie.min.js"></script>
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:radial-gradient(circle at 30% 40%, #fafafa, #f8f8f8);
+    color:#111;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  nav#navbar{
+    position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);
+    display:flex;align-items:center;gap:2.2rem;
+    padding:0.55rem 1.8rem;background:rgba(255,255,255,0.6);
+    border:1px solid rgba(0,0,0,0.08);border-radius:100px;
+    box-shadow:0 2px 20px rgba(0,0,0,0.05);
+    backdrop-filter:blur(25px);z-index:1200;opacity:0;transition:all .25s ease;
+  }
+  nav#navbar a{
+    position:relative;text-decoration:none;color:#1f1f1f;font-size:.93rem;font-weight:500;padding:6px 2px
+  }
+  nav#navbar a::after{
+    content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:#1f1f1f;
+    transition:width .22s cubic-bezier(.2,.9,.3,1)
+  }
+  nav#navbar a:hover::after{width:100%}
+  nav#navbar a.active{color:#8d8d8d;pointer-events:none}
+
+  .page{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    padding-top:100px;
+  }
+
+  .hero{
+    padding:64px 6%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;left:50%;top:35%;transform:translateX(-50%);
+    width:85%;height:55%;background:radial-gradient(closest-side,rgba(253,232,234,0.9),
+      rgba(248,245,246,0.6) 45%,transparent 70%);
+    filter:blur(36px);border-radius:20px;z-index:0;
+  }
+  .grid-overlay{
+    position:absolute;inset:0;
+    background-image:linear-gradient(to right,rgba(0,0,0,0.03) 1px,transparent 1px),
+                     linear-gradient(to bottom,rgba(0,0,0,0.02) 1px,transparent 1px);
+    background-size:calc(100%/12) calc(100%/6);
+    z-index:0;pointer-events:none
+  }
+
+  .hero-inner{
+    width:100%;max-width:1200px;
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:48px;align-items:start;z-index:1;
+  }
+
+  .left-panel{
+    padding:28px;background:rgba(255,255,255,0.85);
+    border-radius:12px;border:1px solid rgba(0,0,0,0.04);
+    box-shadow:0 14px 30px rgba(0,0,0,0.04);
+    min-height:320px;
+  }
+
+  .left-panel h2{font-size:20px;font-weight:700;margin-bottom:10px}
+  .left-panel p{color:#666;margin-bottom:10px}
+
+  .live-clock{font-size:1.6rem;font-weight:700;margin-top:18px}
+
+  .page-title{
+    font-family:'Poppins',sans-serif;font-weight:800;
+    font-size:clamp(64px,8vw,120px);line-height:1;margin-bottom:12px;
+    color:#0b0b0b;letter-spacing:-1px;
+  }
+
+  .card-form{
+    padding:28px;background:transparent;border-radius:12px;
+    display:flex;flex-direction:column;gap:12px;align-items:stretch;
+  }
+  input,textarea{
+    width:100%;padding:14px 16px;border-radius:10px;
+    border:1px solid rgba(0,0,0,0.08);background:#fff;
+    font-size:1rem;outline:none;transition:box-shadow .18s ease, transform .12s ease;
+  }
+  input:focus,textarea:focus{box-shadow:0 8px 18px rgba(0,0,0,0.06);transform:translateY(-2px)}
+  textarea{min-height:160px;resize:vertical;line-height:1.6}
+
+  .submit-row{display:flex;align-items:center;gap:12px;margin-top:10px}
+  .btn{
+    padding:12px 22px;border-radius:999px;border:1px solid rgba(0,0,0,0.08);
+    background:#000;color:#fff;font-weight:600;cursor:pointer;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,0.08)}
+  .btn.secondary{background:transparent;color:#111}
+
+  .contact-bottom{
+    margin:80px 6% 120px;max-width:1200px;
+    display:flex;justify-content:space-between;align-items:center;
+    gap:24px;padding:28px;
+  }
+  .big-contact{font-size:1.2rem;font-weight:700}
+  .socials-row a{margin-right:14px;text-decoration:none;color:#333;font-size:1.1rem}
+
+  .overlay{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(11,11,11,0.25);backdrop-filter:blur(6px);
+    z-index:2000;opacity:0;pointer-events:none;transition:opacity .26s ease;
+  }
+  .overlay.visible{opacity:1;pointer-events:auto}
+  .lottie-box{width:380px;height:380px;display:flex;align-items:center;justify-content:center}
+
+  @media(max-width:960px){
+    .hero-inner{grid-template-columns:1fr;gap:20px}
+    .page-title{font-size:clamp(44px,10vw,72px)}
+    .lottie-box{width:260px;height:260px}
+    .contact-bottom{flex-direction:column;align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<!-- PAGE WRAPPER ADDED -->
+<div id="page-wrapper">
+
+<nav id="navbar">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="works.html">Works</a>
+  <a href="contact.html" class="active">Contact</a>
+</nav>
+
+<div class="page">
+  <section class="hero">
+    <div class="grid-overlay"></div>
+
+    <div class="hero-inner">
+
+      <div class="left-panel">
+        <div class="page-title">Contact me</div>
+
+        <h2>Location</h2>
+        <p>Calicut, Kerala, India</p>
+
+        <h2>Year</h2>
+        <p class="muted">2025</p>
+
+        <h2>Live time</h2>
+        <div class="live-clock" id="live-clock">--:--:--</div>
+
+        <p style="margin-top:18px" class="muted">Prefer WhatsApp or email for quick replies. I typically respond within a day.</p>
+      </div>
+
+      <div class="card-form">
+        <div class="muted" style="margin-bottom:7px">Get in touch — keep it short and clear</div>
+
+        <input type="text" id="name" placeholder="Your full name" required>
+        <input type="email" id="email" placeholder="you@mail.com" required>
+        <textarea id="message" placeholder="Tell me what you want built..." required></textarea>
+
+        <div class="submit-row">
+          <button id="sendBtn" class="btn">Send message</button>
+          <button id="clearBtn" class="btn secondary" type="button">Clear</button>
+          <div style="flex:1"></div>
+          <div class="muted">Message will be sent to <strong>achyyuthh@gmail.com</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="contact-bottom">
+    <div>
+      <div class="big-contact">achyyuthh@gmail.com</div>
+      <div style="margin-top:8px;color:#666">Phone: +91 7012365584</div>
+    </div>
+
+    <div class="socials-row">
+      <a href="https://www.instagram.com/achyyuthh/" target="_blank">Instagram</a>
+      <a href="https://discord.com/users/1375569084695052450" target="_blank">Discord</a>
+      <a href="https://github.com/devachyuth" target="_blank">GitHub</a>
+      <a href="https://wa.me/917012365584" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+</div><!-- END WRAPPER -->
+
+<div class="overlay" id="overlay">
+  <div class="lottie-box" id="lottie-box"></div>
+</div>
+
+<script>
+// navbar fade in
+gsap.to("#navbar", { duration:0.7, opacity:1, ease:"power3.out" });
+
+// Active nav
+(function(){
+  const links = document.querySelectorAll('#navbar a');
+  const current = (window.location.pathname.split('/').pop() || 'index.html');
+  links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === current));
+})();
+
+// Live IST clock
+(function(){
+  const el = document.getElementById('live-clock');
+  function pad(n){return n<10?'0'+n:n;}
+  function update(){
+    const now = new Date();
+    const utc = now.getTime() + (now.getTimezoneOffset()*60000);
+    const ist = new Date(utc + 19800000);
+    el.textContent = pad(ist.getHours())+":"+pad(ist.getMinutes())+":"+pad(ist.getSeconds());
+  }
+  update(); setInterval(update,1000);
+})();
+
+// Lottie overlay
+const wrapper = document.getElementById("page-wrapper");
+const overlay = document.getElementById("overlay");
+const lottieBox = document.getElementById("lottie-box");
+let lottieAnim = null;
+
+function showOverlay(){
+  overlay.classList.add("visible");
+  wrapper.style.filter = "blur(6px)";
+
+  if(!lottieAnim){
+    lottieAnim = lottie.loadAnimation({
+      container:lottieBox,
+      renderer:'svg',
+      loop:false,
+      autoplay:true,
+      path:'success.json'
+    });
+    lottieAnim.addEventListener("complete", hideOverlay);
+  } else {
+    lottieAnim.goToAndPlay(0,true);
+  }
+}
+
+function hideOverlay(){
+  wrapper.style.filter = "blur(0px)";
+  overlay.classList.remove("visible");
+}
+
+// FormSubmit
+document.getElementById("sendBtn").addEventListener("click", async (e)=>{
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if(!name || !email || !message){
+    gsap.fromTo(".card-form",{x:-6},{x:0,duration:0.5,ease:"elastic.out(1,0.6)"});
+    return;
+  }
+
+  showOverlay();
+
+  const data = {
+    name:name,
+    email:email,
+    message:message,
+    _subject:"New Contact Form Message",
+    _captcha:"false"
+  };
+
+  try{
+    await fetch("https://formsubmit.co/ajax/achyyuthh@gmail.com",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify(data)
+    });
+
+    clearFields();
+
+  } catch(err){
+    console.log("FormSubmit error:", err);
+  }
+});
+
+function clearFields(){
+  document.getElementById("name").value = "";
+  document.getElementById("email").value = "";
+  document.getElementById("message").value = "";
+}
+
+document.getElementById("clearBtn").addEventListener("click", ()=>{
+  clearFields();
+});
+</script>
+
+</body>
+</html>

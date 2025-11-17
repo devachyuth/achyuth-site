@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Achyuth | Web Developer & Designer</title>
+
+<!-- SEO -->
+<meta name="description" content="Hey, I'm Achyuth — a web developer and designer creating elegant, minimal websites that feel premium and effortless. Clean design, smooth motion, and meaningful interactions.">
+<link rel="icon" type="image/png" href="favicon.png">
+
+<!-- Fonts & Scripts -->
+<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:radial-gradient(circle at 30% 40%,#fafafa,#f8f8f8);
+  color:#1f1f1f;
+  overflow-x:hidden;
+}
+
+/* ✅ Minimal custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* for dark mode later, we’ll invert the color */
+body[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ✅ Navbar */
+nav#navbar{
+  position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:2.2rem;
+  padding:0.55rem 1.8rem;background:rgba(255,255,255,0.6);
+  border:1px solid rgba(0,0,0,0.08);border-radius:100px;
+  box-shadow:0 2px 20px rgba(0,0,0,0.05);
+  backdrop-filter:blur(25px);
+  z-index:1000;opacity:0;transition:all .25s ease;
+}
+nav#navbar a{
+  text-decoration:none;color:#1f1f1f;font-size:.93rem;font-weight:500;
+  position:relative;padding:6px 2px;transition:color .2s ease;
+}
+nav#navbar a::after{
+  content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0%;
+  background:#1f1f1f;transition:width .22s cubic-bezier(.2,.9,.3,1);
+}
+nav#navbar a:hover::after{width:100%}
+nav#navbar a.active{color:#8d8d8d;pointer-events:none}
+
+/* ✅ Hero */
+.hero{
+  padding:160px 40px 100px;
+  display:flex;align-items:center;justify-content:center;position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;left:50%;top:50%;
+  width:90%;height:60%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(closest-side,rgba(253,232,234,.9),rgba(248,245,246,.5) 45%,transparent 70%);
+  filter:blur(40px);border-radius:30px;z-index:0;animation:glow 10s ease-in-out infinite alternate;
+}
+@keyframes glow{
+  0%{transform:translate(-50%,-50%) scale(1)}
+  100%{transform:translate(-50%,-52%) scale(1.05)}
+}
+.grid-overlay{
+  position:absolute;inset:0;
+  background-image:linear-gradient(to right,rgba(0,0,0,0.03) 1px,transparent 1px),
+                    linear-gradient(to bottom,rgba(0,0,0,0.02) 1px,transparent 1px);
+  background-size:calc(100%/12) calc(100%/6);
+  z-index:0;pointer-events:none;
+}
+.hero-content{
+  position:relative;z-index:1;max-width:900px;text-align:center;
+}
+.greeting{font-size:1.1rem;color:#777;margin-bottom:10px;opacity:0}
+.name-line h1{
+  font-family:'Poppins',sans-serif;font-size:clamp(48px,6vw,90px);
+  font-weight:800;margin-bottom:10px;opacity:0;
+}
+.name-line span{color:#007aff;font-size:1.5rem}
+.subtext{
+  font-size:1.1rem;color:#444;max-width:600px;margin:0 auto;line-height:1.7;
+  opacity:0;
+}
+
+/* ✅ About Blocks */
+section.about-block{
+  padding:100px 10%;max-width:1200px;margin:auto;opacity:0;
+}
+.about-intro p{
+  font-size:1.15rem;line-height:1.8;color:#333;max-width:800px;
+  margin:auto;text-align:center;
+}
+
+/* Stats */
+.stats{display:flex;justify-content:center;gap:4rem;margin-top:80px;flex-wrap:wrap}
+.stat{text-align:center;transform:translateY(40px);opacity:0}
+.stat h3{font-size:2.4rem;font-weight:700}
+.stat p{font-size:1rem;color:#666;margin-top:5px}
+
+/* Principles */
+.principles{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:2rem;margin-top:100px;
+}
+.principle{
+  background:rgba(255,255,255,0.7);
+  border:1px solid rgba(0,0,0,0.06);
+  border-radius:14px;padding:30px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.03);
+  text-align:center;
+  transform:translateY(40px);
+  opacity:0;
+  position:relative;
+  overflow:hidden;
+}
+.principle::before{
+  content:"";position:absolute;top:0;left:-75px;
+  width:50px;height:100%;background:rgba(255,255,255,.6);
+  transform:skewX(-25deg);
+  transition:left .7s ease;
+}
+.principle:hover::before{left:130%}
+.principle:hover{transform:translateY(-5px) scale(1.02)}
+.principle h4{font-size:1.2rem;margin-bottom:10px}
+.principle p{font-size:.95rem;color:#555}
+
+/* Tools */
+.tools{text-align:center;margin-top:100px;opacity:0}
+.tools h3{font-size:1.3rem;font-weight:600;margin-bottom:20px}
+.tool-badges span{
+  display:inline-block;margin:8px 12px;padding:10px 18px;border-radius:50px;
+  background:rgba(255,255,255,0.8);
+  border:1px solid rgba(0,0,0,0.06);
+  font-size:.9rem;color:#333;
+  transition:transform .3s ease,background .3s ease,box-shadow .3s ease;
+}
+.tool-badges span:hover{
+  transform:translateY(-3px);
+  background:#fff;box-shadow:0 8px 18px rgba(0,0,0,0.05);
+}
+
+/* Quote */
+.quote{
+  text-align:center;margin-top:120px;font-size:1.2rem;
+  color:#444;font-style:italic;opacity:0;transform:translateY(40px);
+}
+
+/* CTA */
+.cta{text-align:center;margin:120px 0;opacity:0}
+.cta a{
+  text-decoration:none;color:#000;border:1px solid rgba(0,0,0,0.1);
+  padding:12px 28px;border-radius:100px;
+  font-weight:500;transition:all .4s ease;
+  position:relative;overflow:hidden;
+}
+.cta a {
+  text-decoration: none;
+  color: #000;
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 12px 28px;
+  border-radius: 100px;
+  font-weight: 500;
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
+  position: relative;
+  background: transparent;
+  display: inline-block;
+}
+
+.cta a:hover {
+  background: #000;
+  color: #fff;
+  transform: scale(1.04);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+
+/* ✅ Cursor Glow Light */
+/* ✅ Cursor Glow Light — Enhanced Visibility */
+.cursor-light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 182, 193, 0.35) 0%,
+    rgba(255, 182, 193, 0.18) 40%,
+    rgba(255, 182, 193, 0.05) 70%,
+    rgba(255, 182, 193, 0) 100%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  filter: blur(55px);
+  opacity: 0.7;
+  z-index: 0;
+  transition: opacity 0.6s ease;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav id="navbar">
+  <a href="index.html">Home</a>
+  <a href="about.html" class="active">About</a>
+  <a href="works.html">Works</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<!-- Subtle Cursor Light -->
+<div class="cursor-light"></div>
+
+
+<!-- Hero -->
+<section class="hero">
+  <div class="grid-overlay"></div>
+  <div class="hero-content">
+    <div class="greeting" id="greet">About Me</div>
+    <div class="name-line" id="name"><h1>Hey, I’m Achyuth<span>*</span></h1></div>
+    <p class="subtext" id="text">I’m a web developer and designer from Kerala, India — blending design and technology to create elegant, minimal, and impactful digital experiences.</p>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about-block">
+  <div class="about-intro">
+    <p>I believe in crafting websites that feel alive — clean, immersive, and meaningful. My approach revolves around simplicity, performance, and seamless user experience. With 3+ years of experience, I’ve built interfaces that not only look good but also <em>work beautifully</em>.</p>
+  </div>
+
+  <div class="stats">
+  <div class="stat"><h3 data-target="3">0+</h3><p>Years of Experience</p></div>
+  <div class="stat"><h3 data-target="70">0+</h3><p>Projects Completed</p></div>
+  <div class="stat"><h3 data-target="30">0+</h3><p>Happy Clients</p></div>
+</div>
+
+  <div class="principles">
+    <div class="principle"><h4>Simplicity</h4><p>Clean, intuitive, and timeless — because great design shouldn’t need an explanation.</p></div>
+    <div class="principle"><h4>Precision</h4><p>Attention to detail defines every project — from layout to micro-interactions.</p></div>
+    <div class="principle"><h4>Emotion</h4><p>Designs that connect, engage, and leave a lasting impression on users.</p></div>
+  </div>
+
+  <div class="tools">
+    <h3>Tools I Use</h3>
+    <div class="tool-badges">
+      <span>HTML</span><span>CSS</span><span>JavaScript</span><span>GSAP</span><span>Figma</span><span>Tailwind</span><span>Firebase</span>
+    </div>
+  </div>
+
+  <div class="quote">“Design is how it works.” — Steve Jobs</div>
+
+  <div class="cta"><a href="works.html">→ View My Works</a></div>
+</section>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Navbar
+gsap.to("#navbar",{duration:0.7,opacity:1,ease:"power3.out"});
+
+// Hero Text Animation
+gsap.timeline({delay:0.4})
+  .to("#greet",{opacity:1,y:-10,duration:0.6,ease:"power2.out"})
+  .to("#name h1",{opacity:1,y:-10,duration:0.7,ease:"power2.out"},"-=0.3")
+  .to("#text",{opacity:1,y:-10,duration:0.7,ease:"power2.out"},"-=0.4");
+
+// Scroll-triggered Animations
+gsap.utils.toArray(".about-block, .stat, .principle, .tools, .quote, .cta").forEach(el=>{
+  gsap.fromTo(el,{opacity:0,y:40},{opacity:1,y:0,duration:0.9,ease:"power3.out",
+    scrollTrigger:{trigger:el,start:"top 85%"}});
+});
+</script>
+
+<script>
+const cursorLight = document.querySelector('.cursor-light');
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let lastMoveTime = Date.now();
+
+// Track mouse
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  lastMoveTime = Date.now();
+  cursorLight.style.opacity = 0.7; // brighten when moving
+});
+
+// Smooth trailing motion
+gsap.ticker.add(() => {
+  gsap.to(cursorLight, {
+    x: mouseX - 140,
+    y: mouseY - 140,
+    duration: 0.3,
+    ease: "power2.out"
+  });
+
+  // fade out if idle
+  if (Date.now() - lastMoveTime > 1500) {
+    cursorLight.style.opacity = 0.3;
+  }
+});
+</script>
+
+<!-- GSAP Smooth Scroll -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollSmoother.min.js"></script>
+
+<script>
+  // ✅ Enable ultra-smooth scrolling
+  window.addEventListener('load', () => {
+    gsap.registerPlugin(ScrollSmoother);
+
+
+  });
+</script>
+
+
+<script>
+window.addEventListener('load', () => {
+  gsap.registerPlugin(ScrollSmoother);
+
+
+
+  // optional subtle parallax on hero section for depth
+  gsap.to(".hero", {
+    yPercent: 5,
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      scrub: true
+    }
+  });
+});
+</script>
+<script>
+gsap.utils.toArray(".stat h3").forEach(counter => {
+  let finalValue = +counter.getAttribute("data-target");
+
+  ScrollTrigger.create({
+    trigger: counter,
+    start: "top 85%",
+    onEnter: () => {
+      gsap.fromTo(counter,
+        { innerText: 0 },
+        {
+          innerText: finalValue,
+          duration: 1.3,
+          ease: "power1.out",
+          snap: { innerText: 1 },
+          onUpdate: () => { counter.innerText = Math.floor(counter.innerText) + "+" }
+        }
+      );
+    },
+    once: true
+  });
+});
+</script>
+
+</body>
+</html>

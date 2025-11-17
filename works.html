@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Achyuth | My Works</title>
+
+<!-- Basic SEO -->
+<meta name="description" content="Selected works by Achyuth, a web developer and designer who builds clean and premium websites with smooth motion and clear structure.">
+<link rel="icon" type="image/png" href="favicon.png">
+
+<!-- Fonts & Scripts -->
+<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,sans-serif;
+  background:radial-gradient(circle at 30% 40%,#fafafa,#f8f8f8);
+  color:#1f1f1f;
+  overflow-x:hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{
+  background:rgba(0,0,0,0.25);
+  border-radius:10px;
+  transition:background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,0.45)}
+
+/* Navbar (same style) */
+nav#navbar{
+  position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:2.2rem;
+  padding:0.55rem 1.8rem;background:rgba(255,255,255,0.6);
+  border:1px solid rgba(0,0,0,0.08);border-radius:100px;
+  box-shadow:0 2px 20px rgba(0,0,0,0.05);
+  backdrop-filter:blur(25px);
+  z-index:1000;opacity:0;transition:all 0.25s ease;
+}
+nav#navbar a{
+  text-decoration:none;color:#1f1f1f;font-size:0.93rem;font-weight:500;
+  position:relative;padding:6px 2px;transition:color 0.2s ease;
+}
+nav#navbar a::after{
+  content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0%;
+  background:#1f1f1f;transition:width 0.22s cubic-bezier(.2,.9,.3,1);
+}
+nav#navbar a:hover::after{width:100%}
+nav#navbar a.active{color:#8d8d8d;pointer-events:none}
+
+/* Hero */
+.hero{
+  padding:160px 40px 80px;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;left:50%;top:50%;
+  width:88%;height:60%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(closest-side,rgba(253,232,234,0.9),rgba(248,245,246,0.5) 45%,transparent 70%);
+  filter:blur(40px);border-radius:30px;
+}
+.grid-overlay{
+  position:absolute;inset:0;
+  background-image:linear-gradient(to right,rgba(0,0,0,0.03) 1px,transparent 1px),
+                   linear-gradient(to bottom,rgba(0,0,0,0.02) 1px,transparent 1px);
+  background-size:calc(100%/12) calc(100%/6);
+  pointer-events:none;
+}
+.hero-content{
+  position:relative;z-index:1;text-align:center;max-width:800px;
+}
+.hero-kicker{
+  font-size:0.95rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:#888;
+  margin-bottom:12px;
+  opacity:0;
+}
+.hero-title{
+  font-family:'Poppins',sans-serif;
+  font-size:clamp(40px,5vw,64px);
+  font-weight:800;
+  margin-bottom:12px;
+  opacity:0;
+}
+.hero-subtext{
+  font-size:1.05rem;
+  color:#444;
+  max-width:520px;
+  margin:0 auto;
+  line-height:1.7;
+  opacity:0;
+}
+
+/* Works section */
+.works-section{
+  max-width:1100px;
+  margin:0 auto 100px;
+  padding:0 24px 40px;
+}
+.work-list{
+  display:flex;
+  flex-direction:column;
+  gap:32px;
+}
+
+/* Project card */
+.work-card{
+  background:rgba(255,255,255,0.86);
+  border-radius:18px;
+  border:1px solid rgba(0,0,0,0.06);
+  box-shadow:0 8px 22px rgba(0,0,0,0.04);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transform:translateY(32px);
+  opacity:0;
+  transition:box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.work-card-inner{
+  display:flex;
+  flex-direction:row;
+  gap:22px;
+  align-items:center;
+}
+.work-image-wrap{
+  flex:0 0 46%;
+  border-radius:14px;
+  overflow:hidden;
+  position:relative;
+}
+.work-image{
+  width:100%;
+  display:block;
+  border-radius:14px;
+  transform:scale(1.02);
+  transition:transform 0.45s ease;
+}
+.work-content{
+  flex:1;
+}
+.work-tag{
+  font-size:0.8rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:#999;
+  margin-bottom:6px;
+}
+.work-title{
+  font-size:1.4rem;
+  font-weight:600;
+  margin-bottom:8px;
+}
+.work-desc{
+  font-size:0.98rem;
+  color:#555;
+  line-height:1.6;
+  margin-bottom:14px;
+}
+.work-meta{
+  font-size:0.9rem;
+  color:#777;
+}
+.work-meta a{
+  color:#111;
+  text-decoration:none;
+  border-bottom:1px solid rgba(0,0,0,0.1);
+  padding-bottom:1px;
+}
+.work-meta a:hover{
+  border-bottom-color:rgba(0,0,0,0.6);
+}
+
+/* card hover */
+.work-card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 16px 40px rgba(0,0,0,0.07);
+  border-color:rgba(0,0,0,0.12);
+}
+.work-card:hover .work-image{
+  transform:scale(1.06);
+}
+
+/* View button row */
+.work-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:0.9rem;
+  color:#777;
+}
+.work-view-btn{
+  border-radius:30px;
+  padding:9px 18px;
+  border:1px solid rgba(0,0,0,0.1);
+  font-size:0.9rem;
+  background:#fff;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:background 0.25s ease,color 0.25s ease,transform 0.25s ease,box-shadow 0.25s ease;
+}
+.work-view-btn span{
+  display:inline-block;
+  transform:translateX(0);
+  transition:transform 0.25s ease;
+}
+.work-view-btn:hover{
+  background:#000;
+  color:#fff;
+  transform:translateY(-1px);
+  box-shadow:0 8px 22px rgba(0,0,0,0.08);
+}
+.work-view-btn:hover span{
+  transform:translateX(3px);
+}
+
+/* Modal overlay */
+.project-modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,0.18);
+  backdrop-filter:blur(18px);
+  z-index:2000;
+  opacity:0;
+  pointer-events:none;
+}
+.project-modal.open{
+  pointer-events:auto;
+}
+.modal-inner{
+  background:rgba(255,255,255,0.96);
+  border-radius:20px;
+  border:1px solid rgba(0,0,0,0.06);
+  box-shadow:0 18px 55px rgba(0,0,0,0.20);
+  max-width:960px;
+  width:90%;
+  max-height:82vh;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;   /* important */
+}
+.modal-header{
+  padding:20px 24px 16px;
+  flex-shrink:0;
+}
+.modal-title{
+  font-size:1.4rem;
+  font-weight:600;
+}
+.modal-close{
+  border:none;
+  background:transparent;
+  font-size:1.3rem;
+  cursor:pointer;
+  padding:4px 6px;
+  border-radius:999px;
+  transition:background 0.2s ease, transform 0.2s ease;
+}
+.modal-close:hover{
+  background:rgba(0,0,0,0.06);
+  transform:rotate(4deg);
+}
+.modal-body{
+  padding:0 24px 24px;
+  overflow-y:auto;     /* scroll inside */
+  max-height:calc(82vh - 70px);  /* subtract header height */
+}
+.modal-image-wrap{
+  max-height:55vh;      /* limits height */
+  overflow:hidden;
+  border-radius:16px;
+}
+.modal-image{
+  width:100%;
+  height:auto;
+  display:block;
+}
+.modal-url{
+  font-size:0.96rem;
+}
+.modal-url a{
+  color:#111;
+  text-decoration:none;
+  border-bottom:1px solid rgba(0,0,0,0.2);
+  padding-bottom:1px;
+}
+.modal-url a:hover{
+  border-bottom-color:rgba(0,0,0,0.6);
+}
+.modal-description{
+  font-size:0.98rem;
+  color:#444;
+  line-height:1.7;
+}
+
+/* CTA */
+.works-cta{
+  text-align:center;
+  padding:60px 24px 90px;
+}
+.works-cta h2{
+  font-size:1.8rem;
+  margin-bottom:10px;
+}
+.works-cta p{
+  font-size:1rem;
+  color:#555;
+  margin-bottom:20px;
+}
+.works-cta a{
+  text-decoration:none;
+  color:#000;
+  border:1px solid rgba(0,0,0,0.12);
+  padding:11px 26px;
+  border-radius:999px;
+  font-size:0.96rem;
+  font-weight:500;
+  transition:all 0.3s ease;
+}
+.works-cta a:hover{
+  background:#000;
+  color:#fff;
+  box-shadow:0 10px 26px rgba(0,0,0,0.12);
+  transform:translateY(-1px);
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero{padding:140px 18px 70px;}
+  .works-section{padding:0 16px;}
+  .work-card-inner{flex-direction:column;}
+  .work-image-wrap{width:100%;}
+  .modal-inner{max-height:88vh;}
+}
+@media(max-width:600px){
+  .modal-inner{
+    width:94%;
+    max-height:88vh;
+    border-radius:16px;
+  }
+  .modal-image-wrap{
+    max-height:40vh;
+  }
+  .modal-title{
+    font-size:1.2rem;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav id="navbar">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="works.html" class="active">Works</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="grid-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-kicker">My Works</div>
+    <h1 class="hero-title">Selected projects that define my style.</h1>
+    <p class="hero-subtext">
+      A small set of websites that focus on clarity, motion and a premium feel.
+      Every project is crafted to look clean, feel smooth and stay easy to use.
+    </p>
+  </div>
+</section>
+
+<!-- Works -->
+<section class="works-section">
+  <div class="work-list">
+
+    <!-- Project 1 -->
+    <article class="work-card"
+      data-project="goutham"
+      data-title="Personal Portfolio – Goutham Jith"
+      data-image="goutham.png"
+      data-url="https://gouthamjith.online"
+      data-description="A fast and minimal portfolio for digital marketer Goutham Jith. The layout highlights services, case studies and contact in a clean and focused way with subtle motion guiding the viewer.">
+      <div class="work-card-inner">
+        <div class="work-image-wrap">
+          <img src="goutham.png" alt="Personal Portfolio - Goutham Jith" class="work-image">
+        </div>
+        <div class="work-content">
+          <div class="work-tag">Website Build</div>
+          <div class="work-title">Personal Portfolio – Goutham Jith</div>
+          <p class="work-desc">
+            A clean portfolio for a digital marketer in Kerala with a modern grid, smooth transitions and a focus on services and credibility.
+          </p>
+          <div class="work-meta">
+            Live at <a href="https://gouthamjith.online" target="_blank" rel="noopener">gouthamjith.online</a>
+          </div>
+        </div>
+      </div>
+      <div class="work-footer">
+        <span>Crafted for clarity and trust</span>
+        <button class="work-view-btn" type="button">
+          View project <span>→</span>
+        </button>
+      </div>
+    </article>
+
+    <!-- Project 2 -->
+    <article class="work-card"
+      data-project="snaptier"
+      data-title="Brand Website – SnapTier"
+      data-image="snaptier.png"
+      data-url="https://snaptier.xyz"
+      data-description="A bold brand site for SnapTier that presents services, visuals and contact in a straightforward layout. The design uses strong typography, soft depth and simple motion to feel sharp yet friendly.">
+      <div class="work-card-inner">
+        <div class="work-image-wrap">
+          <img src="snaptier.png" alt="Brand Website - SnapTier" class="work-image">
+        </div>
+        <div class="work-content">
+          <div class="work-tag">Brand Website</div>
+          <div class="work-title">Brand Website – SnapTier</div>
+          <p class="work-desc">
+            A bright and focused site for the SnapTier brand that showcases services and identity with a premium but minimal layout.
+          </p>
+          <div class="work-meta">
+            Live at <a href="https://snaptier.xyz" target="_blank" rel="noopener">snaptier.xyz</a>
+          </div>
+        </div>
+      </div>
+      <div class="work-footer">
+        <span>Built for a strong first impression</span>
+        <button class="work-view-btn" type="button">
+          View project <span>→</span>
+        </button>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="works-cta">
+  <h2>Like what you see?</h2>
+  <p>Reach out if you want a site that feels as polished and calm as these.</p>
+  <a href="contact.html">Contact Me</a>
+</section>
+
+<!-- Modal -->
+<div class="project-modal" id="project-modal">
+  <div class="modal-inner">
+    <div class="modal-header">
+      <h3 class="modal-title">Project title</h3>
+      <button class="modal-close" type="button" aria-label="Close project view">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-image-wrap">
+        <img src="" alt="" class="modal-image">
+      </div>
+      <p class="modal-url">Live at <a href="#" target="_blank" rel="noopener"></a></p>
+      <p class="modal-description"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// navbar fade in
+gsap.to("#navbar",{duration:0.7,opacity:1,ease:"power3.out"});
+
+// hero text
+gsap.timeline({delay:0.3})
+  .to(".hero-kicker",{opacity:1,y:-8,duration:0.6,ease:"power2.out"})
+  .to(".hero-title",{opacity:1,y:-10,duration:0.7,ease:"power2.out"},"-=0.35")
+  .to(".hero-subtext",{opacity:1,y:-10,duration:0.7,ease:"power2.out"},"-=0.4");
+
+// cards on scroll
+gsap.utils.toArray(".work-card").forEach((card, i)=>{
+  gsap.to(card,{
+    opacity:1,
+    y:0,
+    duration:0.8,
+    delay:i*0.05,
+    ease:"power3.out",
+    scrollTrigger:{
+      trigger:card,
+      start:"top 80%",
+      toggleActions:"play none none reverse"
+    }
+  });
+});
+
+// navbar subtle fade on scroll
+let lastY = 0;
+window.addEventListener("scroll",()=>{
+  const y = window.scrollY;
+  gsap.to("#navbar",{
+    duration:0.25,
+    opacity: y > lastY ? 0.86 : 1,
+    ease:"power2.out"
+  });
+  lastY = Math.max(0,y);
+});
+
+// modal logic
+const modal = document.getElementById("project-modal");
+const modalInner = modal.querySelector(".modal-inner");
+const modalTitle = modal.querySelector(".modal-title");
+const modalImg = modal.querySelector(".modal-image");
+const modalUrlText = modal.querySelector(".modal-url a");
+const modalDesc = modal.querySelector(".modal-description");
+const modalClose = modal.querySelector(".modal-close");
+
+function openModal(card){
+  const title = card.getAttribute("data-title");
+  const img = card.getAttribute("data-image");
+  const url = card.getAttribute("data-url");
+  const desc = card.getAttribute("data-description");
+
+  modalTitle.textContent = title;
+  modalImg.src = img;
+  modalImg.alt = title;
+  modalUrlText.href = url;
+  modalUrlText.textContent = url.replace(/^https?:\/\//,'');
+  modalDesc.textContent = desc;
+
+  modal.classList.add("open");
+  gsap.fromTo(modal,{opacity:0},{opacity:1,duration:0.25,ease:"power2.out"});
+  gsap.fromTo(modalInner,
+    {y:24,scale:0.97,opacity:0},
+    {y:0,scale:1,opacity:1,duration:0.4,ease:"power3.out"}
+  );
+}
+
+function closeModal(){
+  gsap.to(modalInner,{
+    y:20,scale:0.97,opacity:0,duration:0.25,ease:"power2.in"
+  });
+  gsap.to(modal,{
+    opacity:0,
+    duration:0.25,
+    ease:"power2.in",
+    onComplete:()=> modal.classList.remove("open")
+  });
+}
+
+document.querySelectorAll(".work-card, .work-view-btn").forEach(el=>{
+  el.addEventListener("click", e=>{
+    const card = e.currentTarget.closest(".work-card");
+    openModal(card);
+  });
+});
+
+modalClose.addEventListener("click", closeModal);
+modal.addEventListener("click", e=>{
+  if(e.target === modal){ closeModal(); }
+});
+
+document.addEventListener("keydown", e=>{
+  if(e.key === "Escape" && modal.classList.contains("open")){
+    closeModal();
+  }
+});
+</script>
+
+</body>
+</html>

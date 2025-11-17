@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Achyuth | Home</title>
+
+<!-- SF Pro Display -->
+<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+
+<!-- Font Awesome (brands) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: radial-gradient(circle at 30% 40%, #fafafa, #f8f8f8);
+    color: #1f1f1f;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;    /* hero centered + socials bottom */
+    overflow-x: hidden;
+    /* NOTE: no overflow-y:hidden here */
+  }
+
+  /* Locked Navbar */
+  nav#navbar {
+    position: fixed;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 2.2rem;
+    padding: 0.55rem 1.8rem;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 100px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    backdrop-filter: blur(25px);
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.25s ease;
+  }
+  nav#navbar a {
+    position: relative;
+    text-decoration: none;
+    color: #1f1f1f;
+    font-size: 0.93rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    display: inline-block;
+    padding: 6px 2px;
+    transition: color 0.2s ease;
+  }
+  nav#navbar a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 1px;
+    width: 0%;
+    background: #1f1f1f;
+    transition: width 0.22s cubic-bezier(.2,.9,.3,1);
+  }
+  nav#navbar a:hover::after { width: 100%; }
+  nav#navbar a.active {
+    color: #8d8d8d;
+    pointer-events: none;
+    font-weight: 500;
+  }
+  nav#navbar a.active::after { width: 0 !important; }
+
+  /* Layout - hero container fills center space */
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;                 /* fills available vertical space between navbar and socials */
+    gap: 6rem;
+    padding: 0 6%;
+    min-height: 420px;
+  }
+
+  /* Left side */
+  .left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 0 0 35%;
+  }
+  .profile-pic {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    opacity: 0;
+    transform: translateY(0);
+  }
+  .intro-text {
+    margin-top: 1.5rem;
+    font-size: 1.45rem;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    color: #111;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  /* Divider line */
+  .divider {
+    width: 1px;
+    height: 300px;
+    background: #d6d6d6;
+    opacity: 0;
+  }
+
+  /* Right side */
+  .right {
+    flex: 0 0 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  .headline {
+    font-size: 2.6rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #000;
+    opacity: 0;
+    transform: translateY(0);
+  }
+  .subtext {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  /* Social Row (no CSS animation) */
+  .socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0;
+    flex-shrink: 0;
+    opacity: 1;          /* parent visible immediately */
+  }
+  .socials a {
+    text-decoration: none;
+    color: #777;
+    font-size: 1.15rem;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+  }
+  .socials a i { width: 100%; text-align: center; }
+  .socials a:hover {
+    color: #000;
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 900px) {
+    .container { flex-direction: column; gap: 3rem; padding-top: 5rem; min-height: 0; }
+    .divider { display: none; }
+    .right { text-align: center; }
+    .headline { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav id="navbar">
+  <a href="home.html" class="active">Home</a>
+  <a href="about.html">About</a>
+  <a href="works.html">Works</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<!-- Hero Content -->
+<div class="container">
+  <div class="left">
+    <img src="achyuth.jpg" alt="Achyuth" class="profile-pic">
+    <div class="intro-text">Hey, I’m Achyuth</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="right">
+    <div class="headline">Web Developer & Designer</div>
+    <div class="subtext">I create elegant, minimal websites that feel premium and effortless. Clean design, smooth motion, and meaningful interactions — that’s my style.</div>
+  </div>
+</div>
+
+<!-- Social Icons Row -->
+<div class="socials" aria-label="Social links">
+  <a href="https://www.linkedin.com/in/s-achyuth" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+  <a href="https://wa.me/917012365584" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+  <a href="https://www.instagram.com/achyyuthh/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+  <a href="https://github.com/devachyuth" target="_blank" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+  <a href="https://discord.com/users/1375569084695052450" target="_blank" aria-label="Discord"><i class="fab fa-discord" aria-hidden="true"></i></a>
+</div>
+
+<script>
+  // make sure everything (fonts + images) are loaded, then run timeline
+  window.addEventListener('load', () => {
+    // show navbar
+    gsap.to("#navbar", { duration: 0.7, opacity: 1, y: 0, ease: "power3.out" });
+
+    // Ensure socials start visually ready (child elements will animate)
+    gsap.set(".socials a", { opacity: 0, y: 8 });
+
+    // hero timeline
+    const tl = gsap.timeline({ delay: 0.18 });
+
+    tl.to(".profile-pic", { opacity: 1, y: -10, duration: 0.8, ease: "power3.out" })
+      .to(".intro-text", { opacity: 1, y: -8, duration: 0.58, ease: "power2.out" }, "-=0.5")
+      .to(".divider", { opacity: 1, height: 300, duration: 0.62, ease: "power2.out" }, "-=0.45")
+      .to(".headline", { opacity: 1, y: -8, duration: 0.68, ease: "power2.out" }, "-=0.45")
+      .to(".subtext", { opacity: 1, y: -8, duration: 0.68, ease: "power2.out" }, "-=0.55")
+      // animate socials AFTER hero finishes (avoids clipping/flashes)
+      .to(".socials a", { opacity: 1, y: 0, duration: 0.45, stagger: 0.09, ease: "power2.out" }, "+=0.08");
+  });
+
+  // subtle navbar fade on scroll (keeps working)
+  let last = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    gsap.to("#navbar", { duration: 0.28, opacity: y > last ? 0.86 : 1, ease: "power2.out" });
+    last = Math.max(0, y);
+  });
+</script>
+
+</body>
+</html>
